@@ -1,13 +1,15 @@
 const express = require('express')
 const app = express()
 const mongoose = require(`mongoose`)
-// const dotenv = require(`dotenv`)
-// dotenv.config()
+const dotenv = require(`dotenv`)
+dotenv.config()
 app.use(express.json())
+//import routes
+const authRoute = require('./routes/auth')
+const postRoute = require('./routes/posts')
 //connect mongo
-//process.env.MONGODB_URI
 mongoose.connect(
-    "mongodb://Sumit:secret1234@localhost:27017/usersDb?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false",
+    process.env.MONGODB_URI,
     {
         useNewUrlParser:true
     }
@@ -18,9 +20,11 @@ mongoose.connect(
     db.once("open", function () {
       console.log("Connected successfully");
     });
-//import routes
-const authRoute = require('./routes/auth')
 
 app.use(`/api/user`, authRoute)
+app.use('/api/posts', postRoute)
+
+
+
 
 app.listen(3000,()=>{console.log(`server running on 3000`)})
