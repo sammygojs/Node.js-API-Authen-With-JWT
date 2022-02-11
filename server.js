@@ -2,6 +2,8 @@ const express = require('express')
 const app = express()
 const mongoose = require(`mongoose`)
 const dotenv = require(`dotenv`)
+const cors = require('cors')
+app.use(cors())
 dotenv.config()
 app.use(express.json())
 //import routes
@@ -27,4 +29,4 @@ app.use('/api/posts', postRoute)
 
 
 
-app.listen(3000,()=>{console.log(`server running on 3000`)})
+app.listen(3001,()=>{console.log(`server running on 3001`)})
